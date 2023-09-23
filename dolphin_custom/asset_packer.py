@@ -55,6 +55,9 @@ def pack_anim(src: pathlib.Path, dst: pathlib.Path):
         if frame.name == "meta.txt":
             shutil.copyfile(src / "meta.txt", dst / "meta.txt")
             continue
+        elif frame.name.endswith(".bm") or frame.name.endswith(".bmx"):
+            shutil.copyfile(src / frame.name, dst / frame.name)
+            continue
         elif frame.name.startswith("frame_"):
             (dst / frame.with_suffix(".bm").name).write_bytes(convert_bm(frame))
 
@@ -71,6 +74,9 @@ def pack_icon_animated(src: pathlib.Path, dst: pathlib.Path):
             continue
         if frame.name == "frame_rate":
             frame_rate = int((src / "frame_rate").read_text())
+            continue
+        elif frame.name.endswith(".bm") or frame.name.endswith(".bmx"):
+            shutil.copyfile(src / frame.name, dst / frame.name)
             continue
         elif frame.name.startswith("frame_"):
             frame_count += 1
